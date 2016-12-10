@@ -21,13 +21,11 @@
 
 package org.la4j.matrix.dense;
 
-import static org.junit.Assert.assertTrue;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.junit.Test;
 import org.la4j.Matrices;
 import org.la4j.Matrix;
 import org.la4j.matrix.DenseMatrix;
