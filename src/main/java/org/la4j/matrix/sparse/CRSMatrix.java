@@ -25,12 +25,10 @@
 
 package org.la4j.matrix.sparse;
 
-import static org.junit.Assert.assertTrue;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 
-import org.junit.Test;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrices;
