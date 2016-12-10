@@ -103,7 +103,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         double[] values = new double[size];
         int[] rowIndices = new int[size];
         int[] columnPointers = new int[size + 1];
-
+        //mutation: diagonal= diagonal -1;
         for (int i = 0; i < size; i++) {
             rowIndices[i] = i;
             columnPointers[i] = i;
@@ -130,7 +130,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         if (density < 0.0 || density > 1.0) {
             throw new IllegalArgumentException("The density value should be between 0 and 1.0");
         }
-
+        //mutation: rows = rows - 1;
+        
         int cardinality = Math.max((int)((rows * columns) * density), columns);
 
         double[] values = new double[cardinality];
@@ -175,15 +176,16 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
      */
     public static CCSMatrix randomSymmetric(int size, double density, Random random) {
         int cardinality = (int) ((size * size) * density);
-
+        
         // TODO: Issue 15
         // We can do better here. All we need to is to make sure
         // that all the writes to CCS matrix are done in a serial
         // order (column-major). This will give us O(1) performance
         // per write.
 
+        //mutation: size = size - 1
         CCSMatrix matrix = new CCSMatrix(size, size, cardinality);
-
+        
         for (int k = 0; k < cardinality / 2; k++) {
             int i = random.nextInt(size);
             int j = random.nextInt(size);
@@ -257,16 +259,17 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if ((i < a.rows()) && (j < a.columns())) {
-                    current = a.get(i, j);
+                    //mutation: current = a.get(i, j) - 5;
+                	current = a.get(i, j);
                 }
-                if ((i < a.rows()) && (j > a.columns())) {
-                    current = b.get(i, j);
+                if ((i < a.rows()) && (j >= a.columns())) {
+                    current = b.get(i, j - a.columns());
                 }
-                if ((i > a.rows()) && (j < a.columns())) {
-                    current = c.get(i, j);
+                if ((i >= a.rows()) && (j < a.columns())) {
+                    current = c.get(i-a.rows(), j);
                 }
-                if ((i > a.rows()) && (j > a.columns())) {
-                    current = d.get(i, j);
+                if ((i >= a.rows()) && (j >= a.columns())) {
+                    current = d.get(i -a.rows(), j-a.columns());
                 }
                 if (Math.abs(current) > Matrices.EPS) {
                     values.add(current);
@@ -373,7 +376,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public void setAll(double value) {
-        if (value == 0.0) {
+        //mutation: value = value - 5;
+    	if (value == 0.0) {
             cardinality = 0;
         } else {
             int size = (int) capacity();

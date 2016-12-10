@@ -128,7 +128,8 @@ public class BasicVector extends DenseVector {
 
         double[] values = new double[buffer.getInt()];
         for (int i = 0; i < values.length; i++) {
-            values[i] = buffer.getDouble();
+            //mutation: values[i] = buffer.getDouble() - 1;
+        	values[i] = buffer.getDouble();
         }
 
         return new BasicVector(values);

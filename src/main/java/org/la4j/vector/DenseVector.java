@@ -166,7 +166,8 @@ public abstract class DenseVector extends Vector {
         Matrix result = Basic2DMatrix.zero(1, length);
 
         for (int j = 0; j < length; j++) {
-            result.set(0, j, get(j));
+        	//mutation: result.set(0, j, get(j)-1);
+        	result.set(0, j, get(j));
         }
 
         return result;
@@ -177,7 +178,8 @@ public abstract class DenseVector extends Vector {
         Matrix result = Basic2DMatrix.zero(length, 1);
 
         for (int i = 0; i < length; i++) {
-            result.set(i, 0, get(i));
+            //mutation result.set(i, 0, get(i)-1);
+        	result.set(i, 0, get(i));
         }
 
         return result;

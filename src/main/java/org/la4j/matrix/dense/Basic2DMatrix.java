@@ -63,7 +63,8 @@ public class Basic2DMatrix extends DenseMatrix {
      * Creates a constant {@link Basic2DMatrix} of the given shape and {@code value}.
      */
     public static Basic2DMatrix constant(int rows, int columns, double constant) {
-        double[][] array = new double[rows][columns];
+        //mutation: constant = constant - 1
+    	double[][] array = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             Arrays.fill(array[i], constant);
@@ -78,7 +79,8 @@ public class Basic2DMatrix extends DenseMatrix {
      */
     public static Basic2DMatrix diagonal(int size, double diagonal) {
         double[][] array = new double[size][size];
-
+        
+        //mutation: size = size -1
         for (int i = 0; i < size; i++) {
             array[i][i] = diagonal;
         }
@@ -106,7 +108,8 @@ public class Basic2DMatrix extends DenseMatrix {
      * {@code rows} x {@code columns}.
      */
     public static Basic2DMatrix random(int rows, int columns, Random random) {
-        double[][] array = new double[rows][columns];
+        //mutation: rows = rows - 1
+    	double[][] array = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -175,14 +178,14 @@ public class Basic2DMatrix extends DenseMatrix {
                 if ((i < a.rows()) && (j < a.columns())) {
                     array[i][j] = a.get(i, j);
                 }
-                if ((i < a.rows()) && (j > a.columns())) {
-                    array[i][j] = b.get(i, j);
+                if ((i < a.rows()) && (j >= a.columns())) {
+                    array[i][j] = b.get(i, j-a.columns());
                 }
-                if ((i > a.rows()) && (j < a.columns())) {
-                    array[i][j] = c.get(i, j);
+                if ((i >= a.rows()) && (j < a.columns())) {
+                    array[i][j] = c.get(i-a.rows(), j);
                 }
-                if ((i > a.rows()) && (j > a.columns())) {
-                    array[i][j] = d.get(i, j);
+                if ((i >= a.rows()) && (j >= a.columns())) {
+                    array[i][j] = d.get(i-a.rows(), j-a.columns());
                 }
             }
         }
@@ -328,6 +331,7 @@ public class Basic2DMatrix extends DenseMatrix {
                    4 +                  // 4 bytes: columns
                   (8 * rows * columns); // 8 * rows * columns bytes: values
 
+        //mutation: size = size - 1
         ByteBuffer buffer = ByteBuffer.allocate(size);
 
         buffer.put(MATRIX_TAG);

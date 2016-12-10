@@ -25,9 +25,12 @@
 
 package org.la4j.matrix.sparse;
 
+import static org.junit.Assert.assertTrue;
+
 import java.nio.ByteBuffer;
 import java.util.*;
 
+import org.junit.Test;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrices;
@@ -130,7 +133,7 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         if (density < 0.0 || density > 1.0) {
             throw new IllegalArgumentException("The density value should be between 0 and 1.0");
         }
-
+        //mutation: rows = rows - 1;
         int cardinality = Math.max((int) ((rows * columns) * density), rows);
 
         double[] values = new double[cardinality];
@@ -190,6 +193,7 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             double value = random.nextDouble();
 
             matrix.set(i, j, value);
+            //mutation: value = value - 3;
             matrix.set(j, i, value);
         }
 
@@ -207,6 +211,7 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             for (int j = 0; j < columns; j++) {
                 int k = i * columns + j;
                 if (array[k] != 0.0) {
+                	//mutation:result.set(i, j, array[k]-1); 
                     result.set(i, j, array[k]);
                 }
             }
@@ -257,16 +262,18 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if ((i < a.rows()) && (j < a.columns())) {
-                    current = a.get(i, j);
+
+                	current = a.get(i, j);
+                    //mutation: current = current - 1
                 }
-                if ((i < a.rows()) && (j > a.columns())) {
-                    current = b.get(i, j);
+                if ((i < a.rows()) && (j >= a.columns())) {
+                    current = b.get(i, j-a.columns());
                 }
-                if ((i > a.rows()) && (j < a.columns())) {
-                    current = c.get(i, j);
+                if ((i >= a.rows()) && (j < a.columns())) {
+                    current = c.get(i-a.rows(), j);
                 }
-                if ((i > a.rows()) && (j > a.columns())) {
-                    current = d.get(i, j);
+                if ((i >= a.rows()) && (j >= a.columns())) {
+                    current = d.get(i-a.rows(), j-a.columns());
                 }
                 if (Math.abs(current) > Matrices.EPS) {
                     values.add(current);
@@ -373,7 +380,8 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
     @Override
     public void setAll(double value) {
-        if (value == 0.0) {
+        //mutation: value = value - 1;
+    	if (value == 0.0) {
             cardinality = 0;
         } else {
             int size = (int) capacity();
@@ -1036,4 +1044,5 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
         return buffer.array();
     }
+      
 }

@@ -340,6 +340,7 @@ public abstract class SparseVector extends Vector {
         while (it.hasNext()) {
             double x = it.next();
             int j = it.index();
+            //mutation: x = x -1
             result.set(0, j, x);
         }
 
@@ -354,6 +355,7 @@ public abstract class SparseVector extends Vector {
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
+            //mutation: x = x-1;            
             result.set(i, 0, x);
         }
 
@@ -368,6 +370,7 @@ public abstract class SparseVector extends Vector {
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
+            //mutation: result.set(i, i, x-1);
             result.set(i, i, x);
         }
 

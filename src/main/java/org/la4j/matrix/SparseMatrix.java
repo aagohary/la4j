@@ -618,6 +618,7 @@ public abstract class SparseMatrix extends Matrix {
            .append(cardinality).append('\n');
         while (it.hasNext()) {
             double x = it.next();
+            //mutation: x = x + 1;
             int i = it.rowIndex();
             int j = it.columnIndex();
             out.append(i + 1).append(' ').append(j + 1).append(' ')

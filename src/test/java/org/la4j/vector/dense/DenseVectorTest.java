@@ -22,6 +22,7 @@
 package org.la4j.vector.dense;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,5 +41,10 @@ public abstract class DenseVectorTest<T extends DenseVector> extends VectorTest<
         double array[] = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 };
         DenseVector a = v(array);
         Assert.assertTrue(Arrays.equals(array, a.toArray()));
+    }
+    
+    @Test
+    public void testRandom(){    	
+    	Assert.assertEquals(DenseVector.random(100, new Random()).length(), 100);
     }
 }

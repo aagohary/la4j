@@ -21,12 +21,16 @@
 
 package org.la4j.vector.sparse;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.la4j.vector.VectorFactory;
 import org.la4j.vector.VectorTest;
+import org.la4j.Matrix;
 import org.la4j.Vectors;
 import org.la4j.vector.SparseVector;
+import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.functor.VectorAccumulator;
 
 public abstract class SparseVectorTest<T extends SparseVector> extends VectorTest<T> {
@@ -132,4 +136,56 @@ public abstract class SparseVectorTest<T extends SparseVector> extends VectorTes
         a.set(0, 1.0);
         Assert.assertEquals(1.0, a.get(0), 0.0);
     }
+    
+    @Test
+    public void testToFromMatrixMarket(){
+    	SparseVector a = v(0.0, 0.0, 1.0, 0.0, 0.0);
+    	SparseVector a2 = SparseVector.fromMatrixMarket(a.toMatrixMarket());
+    	assertTrue(a.equals(a2));
+    }
+    
+    //added
+    @Test
+    public void testToRowMatrix(){
+    	SparseVector v = v(0.0, 0.0, 1.0, 0.0, 0.0);
+    	Matrix  m = v.toRowMatrix();
+    	assertTrue(m.rows()==1);
+    	assertTrue(m.columns()==5);
+    	assertTrue(m.get(0, 0)==0);
+    	assertTrue(m.get(0, 1)==0);
+    	assertTrue(m.get(0, 2)==1);
+    	assertTrue(m.get(0, 3)==0);
+    	assertTrue(m.get(0, 4)==0);
+    }
+    
+  //added
+    @Test
+    public void testToColumnMatrix(){
+    	SparseVector v = v(0.0, 0.0, 1.0, 0.0, 0.0);
+    	Matrix  m = v.toColumnMatrix();
+    	assertTrue(m.rows()==5);
+    	assertTrue(m.columns()==1);
+    	assertTrue(m.get(0, 0)==0);
+    	assertTrue(m.get(1, 0)==0);
+    	assertTrue(m.get(2, 0)==1);
+    	assertTrue(m.get(3, 0)==0);
+    	assertTrue(m.get(4, 0)==0);
+    }
+
+    //added
+      @Test
+      public void testToDiagonalMatrix(){
+    	  SparseVector v = v(0.0, 0.0, 1.0, 0.0, 0.0);
+      	Matrix  m = v.toDiagonalMatrix();
+      	assertTrue(m.rows()==5);
+      	assertTrue(m.columns()==5);
+      	assertTrue(m.get(0, 0)==0);
+      	assertTrue(m.get(1, 1)==0);
+      	assertTrue(m.get(2, 2)==1);
+      	assertTrue(m.get(3, 3)==0);
+      	assertTrue(m.get(4, 4)==0);
+      }
+    
+      
+    
 }

@@ -206,6 +206,7 @@ public abstract class Matrix implements Iterable<Double> {
                 }
 
                 double x = Double.parseDouble(elements.nextToken());
+                //mutation: x = x - 1;
                 result.set(rows, j++, x);
             }
 
@@ -1469,6 +1470,7 @@ public abstract class Matrix implements Iterable<Double> {
             double x  = it.next();
             int i = it.rowIndex();
             int j = it.columnIndex();
+          //mutation: x = x - 1;
             result.set(i, j, function.evaluate(i, j, x));
         }
 
@@ -1491,6 +1493,7 @@ public abstract class Matrix implements Iterable<Double> {
         while (it.hasNext()) {
             double x = it.next();
             int j = it.index();
+            //mutation: x = x - 1;
             it.set(function.evaluate(j, x));
         }
 
@@ -1513,6 +1516,7 @@ public abstract class Matrix implements Iterable<Double> {
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
+            //mutation: x = x -1;
             it.set(function.evaluate(i, x));
         }
 
@@ -1531,6 +1535,7 @@ public abstract class Matrix implements Iterable<Double> {
             double x = it.next();
             int i = it.rowIndex();
             int j = it.columnIndex();
+            //mutation: x = x - 1; 
             it.set(function.evaluate(i, j, x));
         }
     }
@@ -1558,6 +1563,7 @@ public abstract class Matrix implements Iterable<Double> {
         while (it.hasNext()) {
             double x = it.next();
             int j = it.index();
+          //mutation: x = x - 1;
             it.set(function.evaluate(j, x));
         }
     }
@@ -1574,6 +1580,7 @@ public abstract class Matrix implements Iterable<Double> {
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
+          //mutation: x = x - 1;
             it.set(function.evaluate(i, x));
         }
     }

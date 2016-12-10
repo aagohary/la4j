@@ -27,28 +27,37 @@ import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.MatrixTest;
 import org.la4j.matrix.DenseMatrix;
 
+import static org.junit.Assert.*;
 import static org.la4j.M.*;
 
-public abstract class DenseMatrixTest<T extends DenseMatrix> extends MatrixTest<T> {
+public abstract class DenseMatrixTest<T extends DenseMatrix> extends
+		MatrixTest<T> {
 
-    public DenseMatrixTest(MatrixFactory<T> factory) {
-        super(factory);
-    }
+	public DenseMatrixTest(MatrixFactory<T> factory) {
+		super(factory);
+	}
 
-    @Test
-    public void testToArray() {
-        double array[][] = new double[][] { 
-                { 1.0, 0.0, 0.0 },
-                { 0.0, 5.0, 0.0 }, 
-                { 0.0, 0.0, 9.0 } 
-        };
+	@Test
+	public void testToArray() {
+		double array[][] = new double[][] { { 1.0, 0.0, 0.0 },
+				{ 0.0, 5.0, 0.0 }, { 0.0, 0.0, 9.0 } };
 
-        DenseMatrix a = m(array);
+		DenseMatrix a = m(array);
 
-        double[][] toArray = a.toArray();
+		double[][] toArray = a.toArray();
 
-        for (int i = 0; i < a.rows(); i++) {
-            Assert.assertArrayEquals(array[i], toArray[i], 1e-5);
-        }
-    }
+		for (int i = 0; i < a.rows(); i++) {
+			Assert.assertArrayEquals(array[i], toArray[i], 1e-5);
+		}
+	}
+
+	// added
+	@Test
+	public void testToFromMatrixMarket() {
+		double array[][] = new double[][] { { 1.0, 0.0, 0.0 },
+				{ 0.0, 5.0, 0.0 }, { 0.0, 0.0, 9.0 } };
+
+		DenseMatrix a = m(array);
+		assertTrue(DenseMatrix.fromMatrixMarket(a.toMatrixMarket()).equals(a));
+	}
 }

@@ -173,6 +173,7 @@ public abstract class Vector implements Iterable<Double> {
             for (int k = 0; k < cardinality; k++) {
                 int i = Integer.parseInt(body.nextToken());
                 double x = Double.parseDouble(body.nextToken());
+                //mutation: x = x -1;
                 result.set(i - 1, x);
             }
 

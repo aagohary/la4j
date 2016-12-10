@@ -115,7 +115,9 @@ public class CompressedVector extends SparseVector {
         }
 
         Arrays.sort(indices);
-
+        //mutation: 
+        //length = length - 1;
+        
         return new CompressedVector(length, cardinality, values, indices);
     }
 
@@ -124,9 +126,12 @@ public class CompressedVector extends SparseVector {
      * compressing (copying) the underlying array.
      */
     public static CompressedVector fromArray(double[] array) {
-        int length  = array.length;
+        
+    	int length  = array.length;
         CompressedVector result = CompressedVector.zero(length);
 
+      //mutation:
+      // i<0
         for (int i = 0; i < length; i++) {
             if (array[i] != 0.0) {
                 result.set(i, array[i]);
@@ -408,12 +413,14 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public byte[] toBinary() {
+    	
         int size = 1 +                // 1 byte: class tag
                    4 +                // 4 bytes: length
                    4 +                // 4 bytes: cardinality
                   (8 * cardinality) + // 8 * cardinality bytes: values
                   (8 * cardinality);  // 8 * cardinality bytes: indices
 
+      //mutation: size = size - 1;
         ByteBuffer buffer = ByteBuffer.allocate(size);
 
         buffer.put(VECTOR_TAG);
